@@ -1,5 +1,7 @@
 Adaptation to work with Home-Assistant.
+
 ::
+
     $ source /srv/homeassistant/bin/activate
     $ pip uninstall samsungctl
     $ git clone https://github.com/Kuzj/samsungctl.git
@@ -8,7 +10,9 @@ Adaptation to work with Home-Assistant.
     $ samsungctl --pair
 
 Create file ~/.config/samsungctl.conf
+
 .. code-block:: python
+
     {
         "name": "samsungctl",
         "description": "PC",
@@ -20,19 +24,30 @@ Create file ~/.config/samsungctl.conf
         "session_key": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
         "session_id": "xx"
     }
+    
 In home-assistant source need to add:
+
 ::
+
     /srv/homeassistant/lib/python3.7/site-packages/homeassistant/components/samsungtv/media_player.py
 in PLATFORM_SCHEMA
+
 .. code-block:: python
+
     vol.Optional(CONF_SESSION_KEY): cv.string,
     vol.Optional(CONF_SESSION_ID): cv.string,
+
 in def setup_platform
+
 .. code-block:: python
+
     session_id = config.get(CONF_SESSION_ID)
     session_key = config.get(CONF_SESSION_KEY)
+
 in def __init__
+
 .. code-block:: python
+
     # Select method by port number, mainly for fallback
     if self._config["port"] in (8001, 8002):
         self._config["method"] = "websocket"
@@ -40,9 +55,13 @@ in def __init__
         self._config["method"] = "legacy"
     elif self._config["port"] == 8000:
         self._config["method"] = "pin"
+
 ::
+
     /srv/homeassistant/lib/python3.7/site-packages/homeassistant/const.py
+
 .. code-block:: python
+
     CONF_SESSION_ID = "session_id"
     CONF_SESSION_KEY = "session_key"
 
