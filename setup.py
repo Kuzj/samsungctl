@@ -16,11 +16,12 @@ setuptools.setup(
     entry_points={
         "console_scripts": ["samsungctl=samsungctl.__main__:main"]
     },
-    packages=["samsungctl"],
+    packages=["samsungctl","samsungctl.py3rijndael"],
     install_requires=[],
     extras_require={
         "websocket": ["websocket-client"],
         "interactive_ui": ["curses"],
+        "Crypto": ["pycryptodome"],
     },
     classifiers=[
         "Development Status :: 4 - Beta",
