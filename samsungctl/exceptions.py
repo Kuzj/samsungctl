@@ -13,3 +13,7 @@ class UnhandledResponse(Exception):
 class UnknownMethod(Exception):
     """Unknown method."""
     pass
+
+class SessionIdKeyAbsent(Exception):
+	"""Absent session key or id"""
+	pass

@@ -11,7 +11,6 @@ from . import __title__ as title
 from . import __version__ as version
 from . import exceptions
 from . import Remote
-from .remote_pin import RemotePin
 
 def _read_config():
     config = collections.defaultdict(lambda: None, {
@@ -104,8 +103,11 @@ def main():
         logging.error("Error: --host must be set")
         return
 
+    if not config["session_id"] or not config["session_key"]:
+        logging.warning("Session key or id is absent in conf, run --pair first")
+
     if args.pair:
-        RemotePin.pair(config)
+        Remote(config).remote.pair()
         return
 
     try:
